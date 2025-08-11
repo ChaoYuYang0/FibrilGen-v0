@@ -1,5 +1,5 @@
 # FibrilGen
-FibrilGen is a Python library that builds various cross-beta structures with a set of controllable parameters. Such cross-beta structures can be purely hypothetical or modelled based on experimental data (e.g., cryo-EM or ssNMR data). Combining FibrilGen with MD simulations constitutes a modelling pipeline for screening geometrically feasible and energetically favorable cross-beta structures, which enables a systematic assessment of peptide-based nanomaterials.
+FibrilGen is a Python library that builds various cross-beta structures with a set of controllable parameters. Such cross-beta structures can be purely hypothetical or modelled based on experimental data (e.g., cryo-EM or ssNMR data). Combining FibrilGen with MD simulations constitutes a modelling pipeline for screening geometrically feasible and energetically favorable cross-beta structures, which enables a systematic assessment of peptide packing and peptide-based nanomaterials.
 
 ## PyMol versions
 v2.3.5 (commercial), v1.7.4.5 (educational), v2.3.0 (open-source)
