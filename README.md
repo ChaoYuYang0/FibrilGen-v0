@@ -4,7 +4,7 @@ FibrilGen is a Python library that builds various cross-beta structures with a s
 ## PyMol versions
 v2.3.5 (commercial), v1.7.4.5 (educational), v2.3.0 (open-source)
 
-## Generate example structures
+## Make example structures 
 ### 1. Import FibrilGen functions
 ```bash
 # Change the current directory to FibrilGen
@@ -12,28 +12,19 @@ cd [directory of FibrilGen]
 # Import FibrilGen functions 
 run builder.py
 ```
-### 2. Demonstrate building a beta-sheet structure
+### 2. Build example cross-beta structures
 ```bash
+# Demonstrate building a beta-sheet structure
 example('a_sheet')
-```
-### 3. Demonstrate building a stacked beta-sheet structure
-```bash
+# Demonstrate building a stacked beta-sheet structure
 example('s_sheet')
-```
-### 4. Demonstrate building a rod structure
-```bash
+# Demonstrate building a rod structure
 example('a_rod')
-```
-### 5. Demonstrate building a stacked rod structure
-```bash
+# Demonstrate building a stacked rod structure
 example('s_rod')
-```
-### 6. Demonstrate building a ribbon structure
-```bash
+# Demonstrate building a ribbon structure
 example('a_ribbon')
-```
-### 7. Demonstrate building a stacked ribbon (/tube) structure
-```bash
+#  Demonstrate building a stacked ribbon (/tube) structure
 example('s_ribbon')
 ```
 
