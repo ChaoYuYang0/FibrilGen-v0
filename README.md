@@ -4,7 +4,7 @@ FibrilGen is a Python library that builds various cross-beta structures with a s
 ## PyMol versions
 v2.3.5 (commercial), v1.7.4.5 (educational), v2.3.0 (open-source)
 
-## Generate example structures (in the PyMOL command line)
+## Generate example structures
 ### 1. Import FibrilGen functions
 ```bash
 # Change the current directory to FibrilGen
