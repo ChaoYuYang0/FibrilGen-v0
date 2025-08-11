@@ -79,4 +79,4 @@ run fibril_init.py
 Chao-Yu Yang email address: chao-yu.yang@postgrad.manchester.ac.uk
 
 ## Citation
-Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide \b-sheet nanostructures. Submitted.
+Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide $\b$-sheet nanostructures. Submitted.
