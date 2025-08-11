@@ -4,7 +4,7 @@ FibrilGen is a Python library that builds various cross-beta structures, where a
 ## PyMol versions
 v2.3.5 (commercial), v1.7.4.5 (educational), v2.3.0 (open-source)
 
-## Generate cross-beta nanostructures from PyMOL command line
+## Generate example structures
 ```bash
 # Change the current directory to FibrilGen
 cd [directory of FibrilGen]
@@ -43,8 +43,11 @@ sheet = create_sheet(unit,[0,11],[0,11])
 # Build a bilayer structure 
 sheet.build_a_plain_sheet(['pap','d'],10) # Parameters of ([backbone alignment (e.g., aaa,apa,aap,app,paa,ppa,pap,ppp), beta-sheets arranged face-to-face or face-to-back] and the number of peptides in each sheet
 ```
-
-### 2. Modify fibril_init.py to initialize a cross-beta nanostructure
+### 2. Execute bilayer_init.py in the PyMOL command line
+```bash
+run bilayer_init.py
+```
+### 3. Modify fibril_init.py to initialize a cross-beta nanostructure
 ```bash
 # Import FibrilGen library
 pymol.cmd.run('builder.py')
@@ -67,10 +70,13 @@ fibril = create_fibril(unit)
 fibril.build_a_stack_ribbon(20,30,90,3,20,1) # This is an example of calling the function build_a_stack_ribbon with the initial geometrical parameters (tilt angle, radius, angle for rotational stacking, number of rotational stacking, number of units in the bilayer, and the direction of twist)
 ```
 
-### 3. Execute scripts in the PyMOL command line
+### 4. Execute fibril_init.py in the PyMOL command line
 ```bash
 run fibril_init.py
 ```
 
-## Citation
+## Contact
+Chao-Yu Yang email address: chao-yu.yang@postgrad.manchester.ac.uk
 
+## Citation
+Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide \b-sheet nanostructures. Submitted.
