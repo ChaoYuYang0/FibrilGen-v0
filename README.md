@@ -1,5 +1,5 @@
 # FibrilGen
-FibrilGen is a Python library that builds various cross-beta structures with a set of controllable parameters. Such cross-beta structures can be purely hypothetical or modelled based on experimental data (e.g., cryo-EM or ssNMR data). Combining FibrilGen with MD simulations constitutes a modelling pipeline for screening geometrically feasible and energetically favorable cross-beta structures, which enables a systematic exploration and assessment of peptide-based nanomaterials.
+FibrilGen is a Python library that builds various cross-beta structures with a set of controllable parameters. Such cross-beta structures can be purely hypothetical or modelled based on experimental data (e.g., cryo-EM or ssNMR data). Combining FibrilGen with MD simulations constitutes a modelling pipeline for screening geometrically feasible and energetically favorable cross-beta structures, which enables a systematic assessment of peptide-based nanomaterials.
 
 ## PyMol versions
 v2.3.5 (commercial), v1.7.4.5 (educational), v2.3.0 (open-source)
@@ -78,6 +78,22 @@ fibril.build_a_stack_ribbon(20,30,90,3,20,1) # This is an example of calling the
 ```bash
 run fibril_init.py
 ```
+
+## Controllable parameters
+FibrilGen offers a fibril assembly space mapped from a set of input parameters. Each FibrilGen fibril model represents a stacking and twisting pattern for further adjustment of helical twist for a compact assembly. 
+1. fibril.build_a_flat_sheet (N)
+The function “build_a_flat_sheet” takes only one parameter, N, to specify the repeat of the 2x2 unit along the beta-sheet axis (Figure 2a).
+2. fibril.build_a_stacked_sheet(K, N)
+The function “build_a_stacked_sheet” takes input parameters N and K to stack the 2x2 unit along the fibril long axis (Figure 2a) and on the fibril cross-section (Figure 2b), respectively. 
+3. fibril.build_a_rod(theta_z, N, the sign of theta_y)
+The function “build_a_rod” takes an input parameter N to stack the 2x2 unit along the beta-sheet axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned to 1 or -1) of the twist angle theta_y (Figure 2c).
+4. fibril.build_a_stacked_rod(theta_z, K, N, the sign of theta_y)
+The function “build_a_stacked_rod” takes input parameters N and K for a linear stacking of the 2x2 unit along the fibril long axis (Figure 2a) and on the fibril cross-section (Figure 2b). An initial helical twist is assigned with a tilt angle z and the direction (assigned as 1 or -1) of the twist angle y(Figure 2c).
+5. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y)
+The function “build_a_ribbon” takes an input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c).
+6. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, the sign of theta_y)
+The function “build_a_stacked_ribbon” takes input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for M times is assigned (Figure 2b). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c). Here tube is a special case that theta_∙M=360°.
+
 
 ## Contact
 Chao-Yu Yang email address: chao-yu.yang@postgrad.manchester.ac.uk
