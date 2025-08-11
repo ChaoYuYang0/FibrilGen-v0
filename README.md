@@ -25,7 +25,7 @@ example('s_ribbon')
 ```
 
 ## Make your structures
-### 1. Build a bilayer beta-sheet structure
+### 1. Modify bilayer_init.py to initialize a bilayer beta-sheet structure
 ```bash
 # Import pep2unit library
 pymol.cmd.run('pep2unit.py')
@@ -44,7 +44,7 @@ sheet = create_sheet(unit,[0,11],[0,11])
 sheet.build_a_plain_sheet(['pap','d'],10) # Parameters of ([backbone alignment (e.g., aaa,apa,aap,app,paa,ppa,pap,ppp), beta-sheets arranged face-to-face or face-to-back] and the number of peptides in each sheet
 ```
 
-### 2. Modify run.py to assign cross-beta nanostructures
+### 2. Modify fibril_init.py to initialize a cross-beta nanostructure
 ```bash
 # Import FibrilGen library
 pymol.cmd.run('builder.py')
@@ -69,22 +69,7 @@ fibril.build_a_stack_ribbon(20,30,90,3,20,1) # This is an example of calling the
 
 ### 3. Execute scripts in the PyMOL command line
 ```bash
-run run.py
-```
-## Conformational analysis of freely oriented beta-sheet nanostructures
-### Change directory to analysis/
-```bash
-# Import library
-from func import *
-# Assign an (M,N,3) array of M frames of the COM of N peptides
-traj = [A list of peptide COM from MD trajectories]
-# Assign beta-sheets by the range of peptide indices
-idx_connected = [[a,b],[c,d],...] # The first b-sheet is indexed from a to b, the second b-sheet is indexed from c to d, ...
-# Create a fibril object
-fibril = fibril_conformation(idx_connected)
-# Get the fibril morphology
-morph = fibril.get_morph(traj)
-print ('Radii: %s and Pitches: %s'%(morph['radius'],morph['pitch']))
+run fibril_init.py
 ```
 
 ## Citation
