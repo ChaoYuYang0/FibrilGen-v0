@@ -71,7 +71,7 @@ unit = create_sheet_unit('p1','p2','p3','p4','po1','po2','po3')
 # Create a fibril object
 fibril = create_fibril(unit)
 # Build a cross-beta structure (e.g., a ribbon)
-fibril.build_a_stack_ribbon(20,30,90,3,20,1) # This is an example of calling the function build_a_stack_ribbon with the initial geometrical parameters (tilt angle, radius, angle for rotational stacking, number of rotational stacking, number of units in the bilayer, and the direction of twist)
+fibril.build_a_stacked_ribbon(20,30,90,3,20,1) # This is an example of calling the function build_a_stacked_ribbon with the initial geometrical parameters (tilt angle, radius, angle for rotational stacking, number of rotational stacking, number of units in the bilayer, and the direction of twist)
 ```
 
 ### 4. Execute fibril_init.py in the PyMOL command line
