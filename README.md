@@ -82,16 +82,16 @@ run fibril_init.py
 ## Controllable parameters
 FibrilGen offers a fibril assembly space that relates a set of input parameters. Each FibrilGen fibril model represents a stacking pattern and an automatic adjustment of helical twist for a compact assembly. 
 1. fibril.build_a_flat_sheet (N)
-The function “build_a_flat_sheet” takes only one parameter, N, to specify the repeat of the 2x2 unit along the beta-sheet axis (Figure 2a).
-2. fibril.build_a_stacked_sheet(K, N)
+  The function “build_a_flat_sheet” takes only one parameter, N, to specify the repeat of the 2x2 unit along the beta-sheet axis (Figure 2a).
+3. fibril.build_a_stacked_sheet(K, N)
 The function “build_a_stacked_sheet” takes input parameters N and K to stack the 2x2 unit along the fibril long axis (Figure 2a) and on the fibril cross-section (Figure 2b), respectively. 
-3. fibril.build_a_rod(theta_z, N, the sign of theta_y)
+4. fibril.build_a_rod(theta_z, N, the sign of theta_y)
 The function “build_a_rod” takes an input parameter N to stack the 2x2 unit along the beta-sheet axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned to 1 or -1) of the twist angle theta_y (Figure 2c).
-4. fibril.build_a_stacked_rod(theta_z, K, N, the sign of theta_y)
+5. fibril.build_a_stacked_rod(theta_z, K, N, the sign of theta_y)
 The function “build_a_stacked_rod” takes input parameters N and K for a linear stacking of the 2x2 unit along the fibril long axis (Figure 2a) and on the fibril cross-section (Figure 2b). An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c).
-5. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y)
+6. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y)
 The function “build_a_ribbon” takes an input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c).
-6. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, the sign of theta_y)
+7. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, the sign of theta_y)
 The function “build_a_stacked_ribbon” takes input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for M times is assigned (Figure 2b). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c). Here tube is a special case that theta_∙M=360°.
 
 
