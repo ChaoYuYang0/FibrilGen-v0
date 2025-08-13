@@ -80,7 +80,7 @@ fibril.build_a_stacked_ribbon(20,30,90,3,20,1) # This is an example of calling t
 run fibril_init.py
 ```
 
-## Parameters to control fibril morphology
+## Parameters to control fibril morphologies
 FibrilGen has six functions for fibril generation. Each function takes a set of input parameters described below.
 1. fibril.build_a_flat_sheet (N). The function “build_a_flat_sheet” takes only one parameter, N, to specify the repeat of the 2x2 unit along the beta-sheet axis (Figure 2a).
 2. fibril.build_a_stacked_sheet(K, N). The function “build_a_stacked_sheet” takes input parameters N and K to stack the 2x2 unit along the fibril long axis (Figure 2a) and on the fibril cross-section (Figure 2b), respectively.
