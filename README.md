@@ -58,7 +58,7 @@ run bilayer_init.py
 # Import FibrilGen library
 pymol.cmd.run('builder.py')
 # Load a bilayer structure
-pymol.cmd.load('examples/input/capF8.pdb')
+pymol.cmd.load('examples/input/capF8_bilayer.pdb')
 # Select four peptides p1,p2,p3,p4 to construct a 2x2 assembly unit
 pymol.cmd.select('p1','resi 21-30')
 pymol.cmd.select('p2','resi 31-40')
