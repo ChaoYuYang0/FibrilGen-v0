@@ -25,7 +25,7 @@ unit = create_sheet_unit('p1','p2','p3','p4','po1','po2','po3')
 fibril = create_fibril(unit)
 
 ## --- Examples of structures ---
-# fibril.build_a_plain_sheet(10)
+# fibril.build_a_flat_sheet(10)
 ## Build a plain sheet (stacking pattern, num of units per sheet)
 # fibril.build_a_stacked_sheet([[0,1],[1,1]],10)								
 ## Build a rod (tilt angle, num of units per sheet, twist sign)
