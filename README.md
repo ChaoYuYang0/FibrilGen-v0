@@ -24,7 +24,7 @@ example('a_rod')
 example('s_rod')
 # Demonstrate building a ribbon structure
 example('a_ribbon')
-#  Demonstrate building a stacked ribbon (/tube) structure
+#  Demonstrate building a stacked ribbon structure
 example('s_ribbon')
 ```
 
