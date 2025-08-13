@@ -45,7 +45,7 @@ unit = create_pep_unit('AL1','po1','po2','po3','po4')
 # Create a sheet object
 sheet = create_sheet(unit,[0,11],[0,11])
 # Build a bilayer structure
-sheet.build_a_plain_sheet(['pap','d'],10) # Parameters of ([backbone alignment (e.g., aaa,apa,aap,app,paa,ppa,pap,ppp), beta-sheets arranged face-to-face or face-to-back] and the number of peptides in each sheet
+sheet.build_a_plain_sheet(['pap','d'],5) # Parameters of ([backbone alignment (e.g., aaa,apa,aap,app,paa,ppa,pap,ppp), beta-sheets arranged face-to-face or face-to-back] and the number of units in each sheet
 ```
 ### 2. Execute bilayer_init.py in the PyMOL command line
 ```bash
