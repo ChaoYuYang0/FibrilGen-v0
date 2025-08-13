@@ -34,7 +34,7 @@ def example(morphology):
 	pymol.cmd.delete('all')
 	pymol.cmd.reset()
 	## Load PDB
-	pymol.cmd.load('examples/input/capF8.pdb')
+	pymol.cmd.load('structures/input/capF8_bilayer.pdb')
 	## Select a reference coordinate
 	pymol.cmd.select('p1','resi 21-30')
 	pymol.cmd.select('p2','resi 31-40')
