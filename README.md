@@ -12,7 +12,7 @@ cd [directory of FibrilGen]
 # Import FibrilGen library 
 run builder.py
 ```
-### 2. Build example cross-beta structures
+### 2. Build example FibrilGen structures
 ```bash
 # Demonstrate building a beta-sheet structure
 example('a_sheet')
