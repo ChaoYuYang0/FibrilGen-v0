@@ -28,7 +28,7 @@ example('a_ribbon')
 example('s_ribbon')
 ```
 
-## Make your structures
+## Make basic building blocks
 ### 1. Modify bilayer_init.py to initialize a bilayer beta-sheet structure
 ```bash
 # Import pep2unit library
@@ -44,14 +44,16 @@ pymol.cmd.select('po4','resi 8 and name N')
 unit = create_pep_unit('AL1','po1','po2','po3','po4')
 # Create a sheet object
 sheet = create_sheet(unit,[0,11],[0,11])
-# Build a bilayer structure 
+# Build a bilayer structure
 sheet.build_a_plain_sheet(['pap','d'],10) # Parameters of ([backbone alignment (e.g., aaa,apa,aap,app,paa,ppa,pap,ppp), beta-sheets arranged face-to-face or face-to-back] and the number of peptides in each sheet
 ```
 ### 2. Execute bilayer_init.py in the PyMOL command line
 ```bash
 run bilayer_init.py
 ```
-### 3. Modify fibril_init.py to initialize a cross-beta nanostructure
+
+## Make your FibrilGen structures
+### 1. Modify fibril_init.py to initialize a cross-beta nanostructure
 ```bash
 # Import FibrilGen library
 pymol.cmd.run('builder.py')
@@ -73,8 +75,7 @@ fibril = create_fibril(unit)
 # Build a cross-beta structure (e.g., a ribbon)
 fibril.build_a_stacked_ribbon(20,30,90,3,20,1) # This is an example of calling the function build_a_stacked_ribbon with the initial geometrical parameters (tilt angle, radius, angle for rotational stacking, number of rotational stacking, number of units in the bilayer, and the direction of twist)
 ```
-
-### 4. Execute fibril_init.py in the PyMOL command line
+### 2. Execute fibril_init.py in the PyMOL command line
 ```bash
 run fibril_init.py
 ```
