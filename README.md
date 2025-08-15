@@ -75,7 +75,7 @@ fibril = create_fibril(unit)
 # Build a cross-beta structure (e.g., a ribbon)
 fibril.build_a_stacked_ribbon(10,30,90,3,20,1)
 ```
-### 2. Execute scripts/fibril_init.py in the PyMOL command line
+### 2. Execute fibril_init.py in the PyMOL command line
 ```bash
 run scripts/fibril_init.py
 ```
