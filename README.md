@@ -88,7 +88,7 @@ fibril.build_a_stacked_ribbon(10,30,90,3,20,1)
 ```bash
 run scripts/fibril_init.py
 ```
-## Hypothesizing fibril structures with FibrilGen
+## Hypothesizing fibril structures
 ### 1. Cryo-EM/ ssNMR data are available
 The 3D reconstruction of cryo-EM electron density could provide beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist (Figure 1). In this way, to assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data of ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit (Figure 2a, Figure 3).
 ### 2. Experimental data are not available
