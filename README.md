@@ -97,8 +97,11 @@ The modelling scheme in Figure 2 is the conformational space of FibrilGen, where
 ### 3. FibrilGen/ MD modeling pipeline
 FibrilGen provides geometrically feasible peptide assemblies with pre-assembled backbone hydrogen bonding and sidechain packing. Whether such an assembly is energy favorable can be assessed by energy minimization, heating equilibration, and MD simulation. A modelling pipeline combining FibrilGen with MD simulation to accept or reject hypothetical structures (Figure S11) can provide a systematic investigation of fibril assembly in various protonation states and solvent conditions.
 
+## License
+The current one is for reviewers only. 
+
 ## Contact
-Chao-Yu Yang email address: chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com
+For issues in FibrilGen usage, please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
 
 ## Citation
 Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures. Submitted.
