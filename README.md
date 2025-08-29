@@ -13,14 +13,6 @@ FibrilGen has six functions under the class "fibril". Each function takes a set 
 5. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y). The function “build_a_ribbon” takes an input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c).
 6. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, the sign of theta_y). The function “build_a_stacked_ribbon” takes input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for M times is assigned (Figure 2b). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c). Here tube is a special case that theta_s∙M=360°.
 
-## Hypothesizing fibril structures with FibrilGen
-### 1. Cryo-EM/ ssNMR data are available
-The 3D reconstruction of cryo-EM electron density could provide beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist (Figure 1). In this way, to assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data of ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit (Figure 2a, Figure 3).
-### 2. Experimental data are not available
-The modelling scheme in Figure 2 is the conformational space of FibrilGen, where the choice of the 2 x 2 unit is discrete, the parameter space (K, M, theta_s) is discrete, and the parameter space (r_y, theta_y, theta_z) is continuous. In FibrilGen, the 2 x 2 unit and the stacking parameters (K, M, theta_s) determine a combinatorial peptide assembly and constrain the feasible helical twists. FibrilGen features feasible geometrical relations by automatically refining each initial helical twist (r_y, the sign of theta_y, theta_z) to a compact and non-intersecting fibril assembly.
-### 3. FibrilGen/ MD modeling pipeline
-FibrilGen provides geometrically feasible peptide assemblies with pre-assembled backbone hydrogen bonding and sidechain packing. Whether such an assembly is energy favorable can be assessed by energy minimization, heating equilibration, and MD simulation. A modelling pipeline combining FibrilGen with MD simulation to accept or reject hypothetical structures (Figure S11) can provide a systematic investigation of fibril assembly in various protonation states and solvent conditions.
-
 ## Structure building and visualization 
 ### 1. Import FibrilGen library
 ```bash
@@ -96,6 +88,13 @@ fibril.build_a_stacked_ribbon(10,30,90,3,20,1)
 ```bash
 run scripts/fibril_init.py
 ```
+## Hypothesizing fibril structures with FibrilGen
+### 1. Cryo-EM/ ssNMR data are available
+The 3D reconstruction of cryo-EM electron density could provide beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist (Figure 1). In this way, to assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data of ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit (Figure 2a, Figure 3).
+### 2. Experimental data are not available
+The modelling scheme in Figure 2 is the conformational space of FibrilGen, where the choice of the 2 x 2 unit is discrete, the parameter space (K, M, theta_s) is discrete, and the parameter space (r_y, theta_y, theta_z) is continuous. In FibrilGen, the 2 x 2 unit and the stacking parameters (K, M, theta_s) determine a combinatorial peptide assembly and constrain the feasible helical twists. FibrilGen features feasible geometrical relations by automatically refining each initial helical twist (r_y, the sign of theta_y, theta_z) to a compact and non-intersecting fibril assembly.
+### 3. FibrilGen/ MD modeling pipeline
+FibrilGen provides geometrically feasible peptide assemblies with pre-assembled backbone hydrogen bonding and sidechain packing. Whether such an assembly is energy favorable can be assessed by energy minimization, heating equilibration, and MD simulation. A modelling pipeline combining FibrilGen with MD simulation to accept or reject hypothetical structures (Figure S11) can provide a systematic investigation of fibril assembly in various protonation states and solvent conditions.
 
 ## License
 The current one is for reviewers only. 
