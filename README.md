@@ -1,5 +1,5 @@
 # FibrilGen
-FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures can be purely hypothetical or modelled based on experimental data (e.g., cryo-EM or ssNMR data). A FibrilGen/ MD workflow can be established for screening geometrically feasible and energetically favorable cross-beta structures. This workflow can also systematically assess cross-beta nanofibrils in various protonation states and solvent conditions.
+FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR data) or they could be purely hypothetical. A FibrilGen/MD workflow has been established for screening geometrically feasible and energetically favorable cross-beta structures (details in the submitted paper). Systematic exploration of various peptide assembly, protonation states, and solvent conditions can aid the design of peptide-based nanomaterials.
 
 ## PyMol versions
 FibrilGen is compatible with PyMOL versions v2.3.5 (commercial), v1.7.4.5 (educational), and v2.3.0 (open-source). Users can import FibrilGen library from PyMOL command line and use FibrilGen functions to generate their fibril structures.
