@@ -13,7 +13,7 @@ FibrilGen has six functions under the class "fibril". Each function takes a set 
 5. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y). The function “build_a_ribbon” takes an input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c).
 6. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, the sign of theta_y). The function “build_a_stacked_ribbon” takes input parameter N to stack the 2x2 unit along the fibril long axis (Figure 2a). The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for M times is assigned (Figure 2b). An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y (Figure 2c). Here tube is a special case that theta_s∙M=360°.
 
-## Structure building and visualization 
+## Generate example structures
 ### 1. Import FibrilGen library
 ```bash
 # Change the current directory to FibrilGen
@@ -37,7 +37,7 @@ example('a_ribbon')
 example('s_ribbon')
 ```
 
-## Customize basic building blocks
+## Generate new building blocks
 ### 1. Modify scripts/bilayer_init.py to initialize a bilayer beta-sheet structure
 ```bash
 # Import pep2unit library
@@ -61,7 +61,7 @@ sheet.build_a_plain_sheet(['pap','d'],5) # Parameters of ([backbone alignment (e
 run scripts/bilayer_init.py
 ```
 
-##  Customize fibril structures
+##  Generate new fibril structures
 ### 1. Modify scripts/fibril_init.py to initialize a cross-beta nanostructure
 ```bash
 # Import FibrilGen library
