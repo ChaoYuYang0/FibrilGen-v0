@@ -43,7 +43,7 @@ example('s_ribbon')
 ```
 ### 3. Output structures
 
-![plot] (demo/demo-fig2.png)
+![plot](demo/demo-fig2.png)
 
 Figure 2. Output structures after calling (a) example('a_sheet'), (b) example('s_sheet'), (c) example('a_rod'), (d) example('a_ribbon'), (e) example('s_rod'), or (f) example('s_ribbon').
 
@@ -73,7 +73,7 @@ run scripts/bilayer_init.py
 ```
 ### 3. Output structures
 
-![plot] (demo/demo-fig3.png)
+![plot](demo/demo-fig3.png)
 
 Figure 3. Building a bilayer structure. (a) A linear segment is selected from the peptide to construct a reference coordinate system (b) Peptide assembly with parallel/ antiparallel alignments. The input peptide, reference coordinate system, and peptide alignment can be changed. 
 
@@ -106,20 +106,20 @@ run scripts/fibril_init.py
 ```
 ### 3. Output structures
 
-![plot] (demo/demo-fig4.png)
+![plot](demo/demo-fig4.png)
 
 Figure 4. Building a cross-b structure. (a) A 2 x 2 unit selected from the bilayer structure (b) C_alpha atoms from the bilayer to construct a reference coordinate (c) A ribbon model of stacking and twisting the 2 x 2 unit. The input bilayer, 2 x 2 unit, reference coordinate system, fibril model, and the value of geometrical parameters can be changed. 
 
 ## Hypothesizing fibril structures
 ### 1. Cryo-EM/ ssNMR data are available
-The 3D reconstruction of cryo-EM electron density could provide the beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist. In this way, we can assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data of ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit.
+The 3D reconstruction of cryo-EM electron density could provide the beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist. In this way, we can assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit.
 ### 2. Experimental data are not available
 The modelling scheme in Figure 2 is the conformational space of FibrilGen, where the choice of the 2 x 2 unit is discrete, the parameter space (K, M, theta_s) is discrete, and the parameter space (r_y, theta_y, theta_z) is continuous. In FibrilGen, the 2 x 2 unit and the stacking parameters (K, M, theta_s) determine a combinatorial peptide assembly and constrain the feasible helical twists. FibrilGen features feasible geometrical relations by automatically refining each initial helical twist (r_y, the sign of theta_y, theta_z) to a compact and non-overlapping fibril assembly.
 ### 3. FibrilGen/ MD modeling pipeline
 FibrilGen provides geometrically feasible peptide assemblies with pre-assembled backbone hydrogen bonding and sidechain packing. Whether such an assembly is energetically favorable can be assessed by energy minimization, heating equilibration, and MD simulation. A modelling pipeline combining FibrilGen with MD simulation to accept or reject hypothetical structures can provide a systematic investigation of fibril assembly in various protonation states and solvent conditions.
 
 ## License
-The code is free for non-commercial usages.
+The code is free for non-commercial use.
 
 ## Contact
 For issues in FibrilGen usage, please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
