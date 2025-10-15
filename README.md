@@ -1,7 +1,7 @@
 # FibrilGen
 FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR data) or they could be purely hypothetical. A FibrilGen/MD workflow has been established for screening geometrically feasible and energetically favorable cross-beta structures (details in the submitted paper). Systematic exploration of various peptide assembly, protonation states, and solvent conditions can aid the design of peptide-based nanomaterials.
 
-![plot] (demo/demo-fig1.png)
+![plot](demo/demo-fig1.png)
 
 Figure 1. FibrilGen modeling of cross-beta structures. (a) A 2 x 2 alignment of a b-strand (b) A refinement of sidechain orientation (e.g., by energy minimization) (c) Vertical stacking of a 2 x 2 building block, where N is the number of units along the vertical axis (d) Horizontal stacking of the basic unit, where K is a binary matrix of k1 x k2 that assigns the present of units in k1 rows and k2 columns (e) Vertical twisting of the basic unit, where theta_z is the tilt angle from the vertical axis, theta_y is the twist angle around the vertical axis. The sign of theta_y is 1 for a left-handed chirality, and -1 for a right-handed chirality. (f) Horizontal stacking of the basic unit, where theta_s is an angular displacement and M is the number of units that are displaced as 0, theta_s, ..., (M-1)xtheta_s. (g) Vertical twisting of the basic unit, where r_y is the radius displaced from the vertical axis. Twist parameters theta_y, theta_z, r_y are automatically adjusted by FibrilGen to ensure the assembled structure is compact and non-intersecting. 
 
