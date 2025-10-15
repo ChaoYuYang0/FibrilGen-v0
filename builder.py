@@ -3,6 +3,7 @@
 import numpy as np
 import pymol
 import math
+from pymol.cgo import *
 
 def get_ca(name):
 	pymol.cmd.select('lo_ca','name ca and '+name)
@@ -28,6 +29,64 @@ def check_clash(lon,dist_tolorence):
 		pymol.cmd.select('contacts',name+' around '+str(dist_tolorence))
 		print (name,pymol.cmd.get_coords('contacts',1))
 
+def get_bounding_vertices(box_boundaries):
+	minX,minY,minZ,maxX,maxY,maxZ = box_boundaries[1],box_boundaries[3],box_boundaries[5],box_boundaries[0],box_boundaries[2],box_boundaries[4]
+	loPoints = [[minX, minY, minZ],[minX, minY, maxZ],\
+				[minX, maxY, minZ], [minX, maxY, maxZ],\
+				[maxX, minY, minZ], [maxX, minY, maxZ],\
+				[maxX, maxY, minZ], [maxX, maxY, maxZ]]
+	return loPoints
+
+def draw_box(loPoints,boxName):
+	linewidth, r, g, b = 2.0, 1.0, 0.0, 0.0
+	boundingBox = [
+		LINEWIDTH, float(linewidth),
+
+		BEGIN, LINES,
+		COLOR, float(r), float(g), float(b),
+
+		VERTEX, loPoints[0][0], loPoints[0][1], loPoints[0][2],       #1
+		VERTEX, loPoints[1][0], loPoints[1][1], loPoints[1][2],       #2
+
+		VERTEX, loPoints[2][0], loPoints[2][1], loPoints[2][2],       #3
+		VERTEX, loPoints[3][0], loPoints[3][1], loPoints[3][2],       #4
+
+		VERTEX, loPoints[4][0], loPoints[4][1], loPoints[4][2],       #5
+		VERTEX, loPoints[5][0], loPoints[5][1], loPoints[5][2],       #6
+
+		VERTEX, loPoints[6][0], loPoints[6][1], loPoints[6][2],       #7
+		VERTEX, loPoints[7][0], loPoints[7][1], loPoints[7][2],       #8
+
+
+		VERTEX, loPoints[0][0], loPoints[0][1], loPoints[0][2],       #1
+		VERTEX, loPoints[4][0], loPoints[4][1], loPoints[4][2],       #5
+
+		VERTEX, loPoints[2][0], loPoints[2][1], loPoints[2][2],       #3
+		VERTEX, loPoints[6][0], loPoints[6][1], loPoints[6][2],       #7
+
+		VERTEX, loPoints[3][0], loPoints[3][1], loPoints[3][2],       #4
+		VERTEX, loPoints[7][0], loPoints[7][1], loPoints[7][2],       #8
+
+		VERTEX, loPoints[1][0], loPoints[1][1], loPoints[1][2],       #2
+		VERTEX, loPoints[5][0], loPoints[5][1], loPoints[5][2],       #6
+
+
+		VERTEX, loPoints[0][0], loPoints[0][1], loPoints[0][2],       #1
+		VERTEX, loPoints[2][0], loPoints[2][1], loPoints[2][2],       #3
+
+		VERTEX, loPoints[4][0], loPoints[4][1], loPoints[4][2],       #5
+		VERTEX, loPoints[6][0], loPoints[6][1], loPoints[6][2],       #7
+
+		VERTEX, loPoints[1][0], loPoints[1][1], loPoints[1][2],       #2
+		VERTEX, loPoints[3][0], loPoints[3][1], loPoints[3][2],       #4
+
+		VERTEX, loPoints[5][0], loPoints[5][1], loPoints[5][2],       #6
+		VERTEX, loPoints[7][0], loPoints[7][1], loPoints[7][2],       #8
+
+		END
+		]
+	cmd.load_cgo(boundingBox,boxName)
+	return
 
 def example(morphology):
 	## Reset
@@ -68,10 +127,10 @@ def example(morphology):
 		fibril.build_a_stacked_rod(10,[[0,1],[1,1]],15,1)	
 	## Build a ribbon (tilt angle, radius, num of units per sheet, twist sign)
 	elif morphology == 'a_ribbon':
-		fibril.build_a_ribbon(30,30,20,-1)
+		fibril.build_a_ribbon(10,30,60,-1)
 	## Build a stacked ribbon (tilt angle, radius, stacking angle, stacking number, num of units per sheet, twist sign)
 	elif morphology == 's_ribbon':
-		fibril.build_a_stacked_ribbon(10,30,70,2,5,1)
+		fibril.build_a_stacked_ribbon(10,30,70,2,20,1)
 	else:
 		print ('Unknown morphology!')
 	## --- End ---
@@ -111,9 +170,12 @@ class create_sheet_unit():
 		self.b = min(self.b1,self.b2)
 		boundary = get_boundary(['s1_pep1','s1_pep2'])
 		self.l = boundary[0]-boundary[1]
-		box_boundaries = get_boundary(['s1_pep1','s1_pep2','s2_pep1','s2_pep2'])
-		self.box_w = box_boundaries[4]-box_boundaries[5]
-		self.box_l = box_boundaries[0]-box_boundaries[1]
+		self.box_boundaries = get_boundary(['s1_pep1','s1_pep2','s2_pep1','s2_pep2'])
+		self.box_w = self.box_boundaries[4]-self.box_boundaries[5]
+		self.box_l = self.box_boundaries[0]-self.box_boundaries[1]
+		# Draw bounding box
+		draw_box(get_bounding_vertices(self.box_boundaries),'UnitBox')
+
 
 	def get_coordinate_by_xy(self,po1,po2,po3):
 		pos_po1 = np.array(pymol.cmd.get_coords(po1,1)).reshape(3)
@@ -136,43 +198,18 @@ class create_fibril():
 		# Default tolorence
 		self.dist_tolorence = 0.6
 
-	def set_max_twist(self,angle_z,z_sign,y_sign):
-		self.max_twist = 0
+	def check_unit(self,angle_z,angle_y,z_sign,y_sign,radius):
+		max_twist = 0
 		for i in range(21):
 			angle = 0 + i*0.4
-			if self.twist_y_wo_intersection(angle_z,angle,z_sign,y_sign):
-				self.max_twist = angle
-			else:
-				return
-		return
+			if self.unit_is_not_clashed(angle_z,angle,z_sign,y_sign,radius):
+				max_twist = angle
+		if max_twist > angle_y:
+			return 1
+		else:
+			return 0
 
-	def twist_y_wo_intersection(self,angle_z,angle_y,z_sign,y_sign):
-		def idx_collection(x):
-			acc = ''
-			for xi in x:
-				acc += (str(xi)+'+')
-			return acc[:-1]
-
-		def get_sidechain_coord(name):
-			pymol.cmd.select('sele_ca',name+' and name ca')
-			pymol.cmd.select('sele_cb',name+' and name cb')
-			pymol.cmd.select('sele_sc',name+' and sidechain and not (name ca+cb+ha)')
-			idx_ca = [item[1] for item in pymol.cmd.index('sele_ca')]
-			idx_cb = [item[1] for item in pymol.cmd.index('sele_cb')]
-			idx_sc = [item[1] for item in pymol.cmd.index('sele_sc')]
-			dic_coord,acc = {},0
-			for (idx1,idx2) in zip(idx_ca,idx_ca[1:]+[idx_ca[-1]+50]):
-				c_cb = [idx for idx in idx_cb if idx1<idx<idx2]
-				c_sc = [idx for idx in idx_sc if idx1<idx<idx2]
-				if (c_cb != []) and (c_sc != []):
-					coord_ca = pymol.cmd.get_coords(name+' and index '+str(idx1),1)
-					coord_cb = pymol.cmd.get_coords(name+' and index '+str(c_cb[0]),1)
-					coord_sc = pymol.cmd.get_coords(name+' and index '+idx_collection(c_sc),1)
-					dic_coord[acc] = [coord_ca,coord_cb,coord_sc,idx_sc]
-				acc += 1
-			return dic_coord
-
-
+	def unit_is_not_clashed(self,angle_z,angle_y,z_sign,y_sign,radius):
 		def is_clash(name):
 			pymol.cmd.select('contacts',name+' around '+str(self.dist_tolorence))
 			if pymol.cmd.get_coords('contacts',1) is not None:
@@ -185,19 +222,25 @@ class create_fibril():
 		z_sign1 = z_sign[0]
 		name_pep1,name_pep2,name_pep3 = 'test_s1_pep1','test_s1_pep2','test_s1_pep3'
 		pymol.cmd.create(name_pep1,'s1_pep1')
+		pymol.cmd.translate([0,0,radius],name_pep1)
 		self.affine_transformation(name_pep1,z_sign1*(angle_z+self.tilt_s1),y_sign*angle_y*2*i,[0,0,0],[0,self.unit.b1*2*i+200,0])
 		pymol.cmd.create(name_pep2,'s1_pep2')
+		pymol.cmd.translate([0,0,radius],name_pep2)
 		self.affine_transformation(name_pep2,z_sign1*(angle_z+self.tilt_s1),y_sign*angle_y*(2*i+1),[0,-self.unit.b1,0],[0,self.unit.b1*(2*i+1)+200,0])
 		pymol.cmd.create(name_pep3,'s1_pep1')
+		pymol.cmd.translate([0,0,radius],name_pep3)
 		self.affine_transformation(name_pep3,z_sign1*(angle_z+self.tilt_s1),y_sign*angle_y*2*(i+1),[0,0,0],[0,self.unit.b1*2*(i+1)+200,0])
 
 		z_sign2 = z_sign[1]
 		name_pep1,name_pep2,name_pep3 = 'test_s2_pep1','test_s2_pep2','test_s2_pep3'
 		pymol.cmd.create(name_pep1,'s2_pep1')
+		pymol.cmd.translate([0,0,radius],name_pep1)
 		self.affine_transformation(name_pep1,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*2*i,[0,0,0],[0,self.unit.b2*2*i+200,0])
 		pymol.cmd.create(name_pep2,'s2_pep2')
+		pymol.cmd.translate([0,0,radius],name_pep2)
 		self.affine_transformation(name_pep2,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*(2*i+1),[0,-self.unit.b2,0],[0,self.unit.b2*(2*i+1)+200,0])
 		pymol.cmd.create(name_pep3,'s2_pep1')
+		pymol.cmd.translate([0,0,radius],name_pep3)
 		self.affine_transformation(name_pep3,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*2*(i+1),[0,0,0],[0,self.unit.b2*2*(i+1)+200,0])
 
 		# Check whether in close contacts
@@ -207,29 +250,37 @@ class create_fibril():
 				return 0
 				
 		pymol.cmd.delete('test*')
-		return 1
+		return 1		
+
 
 	def build_a_flat_sheet(self,num_half):
+		# Build the first sheet of the bilayer
 		for i in range(num_half):
 			name_pep1,name_pep2 = 'p_s1_pep1_'+str(i),'p_s1_pep2_'+str(i)
 			pymol.cmd.create(name_pep1,'s1_pep1')
 			pymol.cmd.translate([0,self.unit.b1*2*i,0],name_pep1)
 			pymol.cmd.create(name_pep2,'s1_pep2')
 			pymol.cmd.translate([0,self.unit.b1*2*i,0],name_pep2)
+		# Build the second sheet of the bilayer
 		for i in range(num_half):
 			name_pep1,name_pep2 = 'p_s2_pep1_'+str(i),'p_s2_pep2_'+str(i)
 			pymol.cmd.create(name_pep1,'s2_pep1')
 			pymol.cmd.translate([0,self.unit.b2*2*i,0],name_pep1)
 			pymol.cmd.create(name_pep2,'s2_pep2')
 			pymol.cmd.translate([0,self.unit.b2*2*i,0],name_pep2)
+		# Build box representation
+		for i in range(num_half):
+			name_box = 'vis_'+str(i)
+			self.affine_transformation_a_box(name_box,0,0,[0,0,0],[0,self.unit.b1*2*i,0])
 		pymol.cmd.color('green','p_s1_*')
 		pymol.cmd.color('orange','p_s2_*')
 		pymol.cmd.group('plain_sheet','p_*')
+		pymol.cmd.group('visBox','vis_*')
 		self.set_dimension(0,0,0,self.unit.b)
 		return
 
 	def build_a_stacked_sheet(self,stacking,num_half):
-		# Build a position matrix
+		# Get a position matrix
 		stacking = np.array(stacking)
 		stack_z,stack_x = stacking.shape
 		pos_matrix = np.zeros((stack_z,stack_x,2))
@@ -260,17 +311,21 @@ class create_fibril():
 					pymol.cmd.translate([pos_x,self.unit.b2*2*i,pos_z],name_pep1)
 					pymol.cmd.create(name_pep2,'s2_pep2')
 					pymol.cmd.translate([pos_x,self.unit.b2*2*i,pos_z],name_pep2)
+				for i in range(num_half):
+					name_box = 'vis_'+str(i)+'_'+str(idx_unit)
+					self.affine_transformation_a_box(name_box,0,0,[0,0,0],[pos_x,self.unit.b1*2*i,pos_z])
 				idx_unit += 1
 		pymol.cmd.color('green','sp_s1_*')
 		pymol.cmd.color('orange','sp_s2_*')
 		pymol.cmd.group('plain_sheet','sp_*')
+		pymol.cmd.group('visBox','vis_*')
 		self.set_dimension(0,0,0,self.unit.b)
 		return
 
 
 	def build_a_rod(self,angle_z,num_half,sign):
 		radius = self.unit.d/2.0
-		# Check geometry
+		# Refine the input geometry
 		param = self.refine_theta(angle_z*np.pi/180,radius,sign)
 		if param == None:
 			print ('Please decrease tilt angle!')
@@ -294,14 +349,19 @@ class create_fibril():
 				self.affine_transformation(name_pep1,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*2*i,[0,0,0],[0,y*2*i,0])
 				pymol.cmd.create(name_pep2,'s2_pep2')
 				self.affine_transformation(name_pep2,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*(2*i+1),[0,-self.unit.b2,0],[0,y*(2*i+1),0])
+			for i in range(num_half):
+				name_box = 'vis_'+str(i)
+				self.affine_transformation_a_box(name_box,0,y_sign*theta_y*(2*i+0.5),[0,0,0],[0,y*2*i,0])
+
 			pymol.cmd.color('green','nr_s1_*')
 			pymol.cmd.color('orange','nr_s2_*')
 			pymol.cmd.group('a_rod','nr_*')
+			pymol.cmd.group('visBox','vis_*')
 			self.set_dimension(radius,theta_z,theta_y,y)
 			return
 
 	def build_a_stacked_rod(self,angle_z,stacking,num_half,sign):
-		# Build a position matrix
+		# Get a position matrix
 		stacking = np.array(stacking)
 		stack_z,stack_x = stacking.shape
 		pos_matrix = np.zeros((stack_z,stack_x,2))
@@ -313,7 +373,7 @@ class create_fibril():
 			for k in range(stack_x):
 				pos_matrix[j,k,0] = (started_z-j)*dist_z
 				pos_matrix[j,k,1] = (-started_x+k)*dist_x
-		# Check geometry
+		# Refine the input geometry
 		radius_matrix = (pos_matrix[:,:,0]**2+pos_matrix[:,:,1]**2)**0.5
 		param = self.refine_stack_rod(angle_z*np.pi/180,radius_matrix.reshape(-1),sign)
 		if (param == None):
@@ -327,7 +387,6 @@ class create_fibril():
 			idx_unit = 0
 			for (pos,stack_this) in zip(pos_matrix.reshape((-1,2)).tolist(),stacking.flatten()):
 				if stack_this:
-					# Get param
 					pos_z,pos_x = pos
 					y_sign = -sign
 					z_sign1 = np.sign(pos_z-self.unit.d/2.0)*sign
@@ -342,7 +401,6 @@ class create_fibril():
 						pymol.cmd.translate([pos_x,0,pos_z],name_pep2)
 						self.affine_transformation(name_pep2,z_sign1*(angle_z+self.tilt_s1),y_sign*angle_y*(2*i+1),[0,-self.unit.b1,0],[0,y*(2*i+1),0])
 					z_sign2 = np.sign(pos_z+self.unit.d/2.0)*sign
-					# print (angle_y,z_sign1,z_sign2)
 					for i in range(num_half):
 						name = str(i)+'_'+str(idx_unit)
 						name_pep1,name_pep2 = 'snr_s2_pep1_'+name,'snr_s2_pep2_'+name
@@ -352,22 +410,25 @@ class create_fibril():
 						pymol.cmd.create(name_pep2,'s2_pep2')
 						pymol.cmd.translate([pos_x,0,pos_z],name_pep2)
 						self.affine_transformation(name_pep2,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*(2*i+1),[0,-self.unit.b2,0],[0,y*(2*i+1),0])
+					for i in range(num_half):
+						name_box = 'vis_'+str(i)+'_'+str(idx_unit)
+						self.affine_transformation_a_box(name_box,0,y_sign*theta_y*(2*i+0.5),[pos_x,0,pos_z],[0,y*2*i,0])
 					idx_unit += 1
 			pymol.cmd.color('green','snr_s1_*')
 			pymol.cmd.color('orange','snr_s2_*')
 			pymol.cmd.group('s_rod','snr_*')
+			pymol.cmd.group('visBox','vis_*')
 			self.set_dimension(max(radius_matrix.reshape(-1)),theta_z,theta_y,y)
 			return
 
 	def build_a_ribbon(self,angle_z,radius,num_half,sign):
 		radius_offset = self.unit.d/2.0
-		# Check geometry
+		# Refine the input geometry
 		param = self.refine_theta_radius(angle_z*np.pi/180,radius,sign)
 		if param == None:
 			print ('Please decrease tilt angle or try another radius!')
 			print ('Stop to update ... ')
 			return
-		# Get param
 		else:
 			theta_z,theta_y,radius,y = param
 			angle_z,angle_y = theta_z*180/np.pi,theta_y*180/np.pi
@@ -391,22 +452,26 @@ class create_fibril():
 				pymol.cmd.create(name_pep2,'s2_pep2')
 				pymol.cmd.translate([0,0,radius],name_pep2)
 				self.affine_transformation(name_pep2,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*(2*i+1),[0,-self.unit.b2,0],[0,y*(2*i+1),0])
-				
+			tilt_s1,tilt_s2 = self.tilt_s1*np.pi/180,self.tilt_s2*np.pi/180
+			for i in range(num_half):
+				name_box = 'vis_'+str(i)
+				self.affine_transformation_a_box(name_box,(z_sign1/2.0+z_sign2/2.0)*(theta_z+tilt_s1/2.0+tilt_s2/2.0),y_sign*theta_y*(2*i+0.5),[0,0,radius],[0,y*2*i,0])
+
 			pymol.cmd.color('green','r_s1_*')
 			pymol.cmd.color('orange','r_s2_*')
 			pymol.cmd.group('a_ribbon','r_*')
+			pymol.cmd.group('visBox','vis_*')
 			self.set_dimension(radius,theta_z,theta_y,y)
 			return
 
 	def build_a_stacked_ribbon(self,angle_z,radius,angle_stack,num_stack,num_half,sign):
 		radius_offset = self.unit.d/2.0
-		# Check inner sheet geometry and edge contact
+		# Refine the input geometry
 		param = self.refine_stack_ribbon(angle_z*np.pi/180,radius,sign,angle_stack*np.pi/180,num_stack)
 		if param == None:
 			print ('Please decrease tilt angle, try another radius, or try another stack angle!')
 			print ('Stop to update ... ')
 			return		
-		# Get param
 		else:
 			theta_z,theta_y,radius,y = param
 			angle_z,angle_y = theta_z*180/np.pi,theta_y*180/np.pi
@@ -434,9 +499,14 @@ class create_fibril():
 					pymol.cmd.create(name_pep2,'s2_pep2')
 					pymol.cmd.translate([0,0,radius],name_pep2)
 					self.affine_transformation(name_pep2,z_sign2*(angle_z+self.tilt_s2),y_sign*angle_y*(2*i+1)-angle_stack*j,[0,-self.unit.b2,0],[0,y*(2*i+1),0])
+				tilt_s1,tilt_s2,theta_stack = self.tilt_s1*np.pi/180,self.tilt_s2*np.pi/180,angle_stack*np.pi/180
+				for i in range(num_half):
+					name_box = 'vis_'+str(i)+'_'+str(j)
+					self.affine_transformation_a_box(name_box,(z_sign1/2.0+z_sign2/2.0)*(theta_z+tilt_s1/2.0+tilt_s2/2.0),y_sign*theta_y*(2*i+0.5)-theta_stack*j,[0,0,radius],[0,y*2*i,0])
 			pymol.cmd.color('green','sr_s1_*')
 			pymol.cmd.color('orange','sr_s2_*')
 			pymol.cmd.group('s_ribbon','sr_*')
+			pymol.cmd.group('visBox','vis_*')
 			self.set_dimension(radius,theta_z,theta_y,y)
 			return
 
@@ -466,13 +536,13 @@ class create_fibril():
 	def refine_theta(self,theta_z,radius,sign):
 		# Refine the structure by 40 iterations
 		for i in range(40):
-			self.set_max_twist(theta_z*180/np.pi,[np.sign(-self.unit.d/2.0)*sign,np.sign(self.unit.d/2.0)*sign],sign)
-			# Estimate the twist angle
+			# Calculate the twist angle
 			k = self.unit.b*np.sin(theta_z)
 			theta_y = np.arccos(1-0.5*(k/radius)**2)
 			y = self.unit.b*np.cos(theta_z)
-			small_enough_twist = (theta_y < self.max_twist*np.pi/180)
-			if small_enough_twist:
+			# Check clashes
+			good_unit = self.check_unit(theta_z*180/np.pi,theta_y*180/np.pi,[np.sign(-self.unit.d/2.0)*sign,np.sign(self.unit.d/2.0)*sign],sign,0)
+			if good_unit:
 				return [theta_z,theta_y,y]
 			else:
 				if theta_z > 0.02:
@@ -484,13 +554,13 @@ class create_fibril():
 	def refine_theta_radius(self,theta_z,radius,sign):
 		# Refine the structure by 40 iterations
 		for i in range(40):
-			self.set_max_twist(theta_z*180/np.pi,[sign,sign],sign)
-			# Estimate the twist angle
+			# Calculate the twist angle
 			k = self.unit.b*np.sin(theta_z)
 			theta_y = np.arccos(1-0.5*(k/radius)**2)
 			y = self.unit.b*np.cos(theta_z)
-			small_enough_twist = (theta_y < self.max_twist*np.pi/180)
-			if small_enough_twist:
+			# Check clashes
+			good_unit = self.check_unit(theta_z*180/np.pi,theta_y*180/np.pi,[sign,sign],sign,radius)
+			if good_unit:
 				return [theta_z,theta_y,radius,y]
 			else:
 				radius += 1
@@ -504,12 +574,14 @@ class create_fibril():
 		# Refine the structure by 40 iterations
 		radius = min(lo_radius)	# check from the outermost sheet
 		for i in range(40):
-			self.set_max_twist(theta_z*180/np.pi,[np.sign(-self.unit.d/2.0)*sign,np.sign(self.unit.d/2.0)*sign],sign)
 			k = self.unit.b*np.sin(theta_z)
 			theta_y = np.arccos(1-0.5*(k/radius)**2)
 			y = self.unit.b*np.cos(theta_z)
-			small_enough_twist = (theta_y < self.max_twist*np.pi/180)
-			if small_enough_twist:
+			# Check clashes
+			good_unit = 1
+			for a_radius in lo_radius:
+				good_unit *= self.check_unit(theta_z*180/np.pi,theta_y*180/np.pi,[np.sign(-self.unit.d/2.0)*sign,np.sign(self.unit.d/2.0)*sign],sign,a_radius)
+			if good_unit:
 				return [theta_z,theta_y,y]
 			else:
 				if theta_z > 0.02:
@@ -546,21 +618,20 @@ class create_fibril():
 
 		# Refine the structure by 40 iterations
 		for i in range(40):
-			self.set_max_twist(theta_z*180/np.pi,[sign,sign],sign)
-			# print (self.max_twist)
-			# Estimate the twist angle
+			# Calculate the twist angle
 			k = self.unit.b*np.sin(theta_z)
 			theta_y = np.arccos(1-0.5*(k/radius)**2)
 			y = self.unit.b*np.cos(theta_z)
-			small_enough_twist = (theta_y < self.max_twist*np.pi/180)
+			# Check clashes
+			good_unit = self.check_unit(theta_z*180/np.pi,theta_y*180/np.pi,[sign,sign],sign,radius)
 			contact = edge_contact(radius-self.unit.d/2.0,theta_z,theta_y,y,theta_stack,num_stack)
-			if (small_enough_twist and contact=='good_dist'):
+			if (good_unit and contact=='good_dist'):
 				return [theta_z,theta_y,radius,y]
-			elif (not small_enough_twist and contact=='too_close'):
+			elif (not good_unit and contact=='too_close'):
 				radius += 1
 				if theta_z > 0.02:
 					theta_z -= 0.02
-			elif (small_enough_twist and contact=='too_far'):
+			elif (good_unit and contact=='too_far'):
 				radius -= 1
 				theta_z += 0.02
 			else:
@@ -568,7 +639,17 @@ class create_fibril():
 		self.set_dimension(radius,theta_z,theta_y,y)
 		return None
 
-
+	def affine_transformation_a_box(self,name,theta_z,theta_y,translation1,translation2):
+		vertices = np.array(get_bounding_vertices(self.unit.box_boundaries))
+		coord = (vertices+np.array(translation1).reshape((-1,3))).T
+		c,s = np.cos(theta_z),np.sin(theta_z)
+		matrix_z = np.array([[c,-s,0],[s,c,0],[0,0,1]])
+		coord = np.dot(matrix_z,coord)
+		c,s = np.cos(theta_y),np.sin(theta_y)
+		matrix_y = np.array([[c,0,s],[0,1,0],[-s,0,c]])
+		coord = np.dot(matrix_y,coord)
+		coord = coord.T+np.array(translation2).reshape((-1,3))
+		draw_box(coord.tolist(),name)
 
 	def affine_transformation(self,name,angle_z,angle_y,translation1,translation2):
 		# pymol.cmd.translate(translation1,name)
