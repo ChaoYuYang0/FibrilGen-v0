@@ -1,13 +1,9 @@
 # FibrilGen
-FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR data) or they could be purely hypothetical. A FibrilGen/MD workflow has been established for screening geometrically feasible and energetically favorable cross-beta structures (details in the submitted paper). Systematic exploration of various peptide assembly, protonation states, and solvent conditions can aid the design of peptide-based nanomaterials.
+FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR data) or they could be purely hypothetical. A FibrilGen/MD workflow has been established for screening geometrically feasible and energetically favorable cross-beta structures (details in the published [JCIM paper] (https://doi.org/10.1021/acs.jcim.5c02108)). Systematic exploration of various peptide assembly, protonation states, and solvent conditions can aid the design of peptide-based nanomaterials.
 
 ![plot](demo/demo-fig1.png)
 
 Figure 1. FibrilGen modeling of cross-beta structures. (a) A 2 x 2 alignment of a b-strand (b) A refinement of sidechain orientation (e.g., by energy minimization) (c) Vertical stacking of a 2 x 2 building block, where N is the number of units along the vertical axis (d) Horizontal stacking of the basic unit, where K is a binary matrix of k1 x k2 that assigns the present of units in k1 rows and k2 columns (e) Vertical twisting of the basic unit, where theta_z is the tilt angle from the vertical axis, theta_y is the twist angle around the vertical axis. The sign of theta_y is 1 for a left-handed chirality, and -1 for a right-handed chirality. (f) Horizontal stacking of the basic unit, where theta_s is an angular displacement and M is the number of units that are displaced as 0, theta_s, ..., (M-1)xtheta_s. (g) Vertical twisting of the basic unit, where r_y is the radius displaced from the vertical axis. Twist parameters theta_y, theta_z, r_y are automatically adjusted by FibrilGen to ensure the assembled structure is compact and non-intersecting. 
-
-
-## Software compatibility
-FibrilGen is compatible with PyMOL versions v2.3.5 (commercial), v1.7.4.5 (educational), and v2.3.0 (open-source). Users can import FibrilGen library from PyMOL command line and use FibrilGen functions to generate their fibril structures.
 
 ## Library functions
 FibrilGen has six functions under the class "fibril". Each function takes a set of input parameters described below.
@@ -17,6 +13,15 @@ FibrilGen has six functions under the class "fibril". Each function takes a set 
 4. fibril.build_a_stacked_rod(theta_z, K, N, the sign of theta_y). The function “build_a_stacked_rod” takes input parameters N and K for a linear stacking of the 2x2 unit along the fibril long axis and on the fibril cross-section. An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned as 1 or -1) of the twist angle theta_y.
 5. fibril.build_a_ribbon(theta_z, r_y, N, the sign of theta_y). The function “build_a_ribbon” takes an input parameter N to stack the 2x2 unit along the fibril long axis. An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y.
 6. fibril.build_a_stacked_ribbon(theta_z, r_y, theta_s, M, N, the sign of theta_y). The function “build_a_stacked_ribbon” takes input parameter N to stack the 2x2 unit along the fibril long axis. The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for M times is assigned. An initial helical twist is assigned with a tilt angle theta_z, a radius r_y, and the direction (assigned as 1 or -1) of the twist angle theta_y. Here tube is a special case that theta_s∙M=360°.
+
+## Software compatibility
+Users can import FibrilGen library from PyMOL command line and use FibrilGen functions to generate their fibril structures. FibrilGen is compatible with PyMOL versions v2.3.5 (commercial), v1.7.4.5 (educational), and v2.3.0 (open-source). 
+
+## Install open-source PyMOL via conda (recommended)
+1. conda -n pymol
+2. conda activate pymol
+3. conda install -c conda-forge pymol-open-source
+4. pymol
 
 ## Generate example structures
 ### 1. Import FibrilGen library
@@ -121,8 +126,9 @@ FibrilGen provides geometrically feasible peptide assemblies with pre-assembled 
 ## License
 The code is free for non-commercial use.
 
-## Contact
-For issues in FibrilGen usage, please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
+## Contact information
+Please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
 
 ## Citation
-Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures. Accepted.
+Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures. Journal of Chemical Information and Modeling (2025). DOI:[10.1021/acs.jcim.5c02108](https://doi.org/10.1021/acs.jcim.5c02108)
+
