@@ -135,5 +135,5 @@ The code is free for non-commercial use.
 Please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
 
 ## Citation
-Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures. Journal of Chemical Information and Modeling (2025). DOI:[10.1021/acs.jcim.5c02108](https://doi.org/10.1021/acs.jcim.5c02108)
+Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures, JCIM, (2025). DOI:[10.1021/acs.jcim.5c02108](https://doi.org/10.1021/acs.jcim.5c02108)
 
