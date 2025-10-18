@@ -18,10 +18,15 @@ FibrilGen has six functions under the class "fibril". Each function takes a set 
 Users can import FibrilGen library from PyMOL command line and use FibrilGen functions to generate their fibril structures. FibrilGen is compatible with PyMOL versions v2.3.5 (commercial), v1.7.4.5 (educational), and v2.3.0 (open-source). 
 
 ## Install open-source PyMOL via conda (recommended)
-1. conda -n pymol
-2. conda activate pymol
-3. conda install -c conda-forge pymol-open-source
-4. pymol
+```bash
+# Create a virtual environment
+conda -n pymol
+conda activate pymol
+# Install PyMOL
+conda install -c conda-forge pymol-open-source
+# Initialize PyMOL
+pymol
+```
 
 ## Generate example structures
 ### 1. Import FibrilGen library
