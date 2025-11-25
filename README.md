@@ -20,7 +20,7 @@ Users can import FibrilGen library from PyMOL command line and use FibrilGen fun
 ## Install open-source PyMOL via conda (recommended)
 ```bash
 # Create a virtual environment
-conda -n pymol
+conda create -n pymol
 conda activate pymol
 # Install PyMOL
 conda install -c conda-forge pymol-open-source
