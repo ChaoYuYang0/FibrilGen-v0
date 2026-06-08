@@ -20,7 +20,7 @@ Users can import FibrilGen library from PyMOL command line and use FibrilGen fun
 ## Install open-source PyMOL via conda (recommended)
 ```bash
 # Create a virtual environment
-conda create -n pymol
+conda -n pymol
 conda activate pymol
 # Install PyMOL
 conda install -c conda-forge pymol-open-source
@@ -120,13 +120,17 @@ run scripts/fibril_init.py
 
 Figure 4. Building a cross-b structure. (a) A 2 x 2 unit selected from the bilayer structure (b) C_alpha atoms from the bilayer to construct a reference coordinate (c) A ribbon model of stacking and twisting the 2 x 2 unit. The input bilayer, 2 x 2 unit, reference coordinate system, fibril model, and the value of geometrical parameters can be changed. 
 
-## Hypothesizing fibril structures
-### 1. Cryo-EM/ ssNMR data are available
-The 3D reconstruction of cryo-EM electron density could provide the beta-sheet stacking pattern on the fibril cross-section and a rough estimation of helical twist. In this way, we can assign a linear stacking K or a rotational stacking (M, theta_s); and a helical twist of the fibril chirality (the sign of theta_y), tilt angle theta_z, and radius r_y. Data ssNMR that confirms peptide alignments inside the electron density can assign a 2 x 2 unit.
-### 2. Experimental data are not available
-The modelling scheme in Figure 2 is the conformational space of FibrilGen, where the choice of the 2 x 2 unit is discrete, the parameter space (K, M, theta_s) is discrete, and the parameter space (r_y, theta_y, theta_z) is continuous. In FibrilGen, the 2 x 2 unit and the stacking parameters (K, M, theta_s) determine a combinatorial peptide assembly and constrain the feasible helical twists. FibrilGen features feasible geometrical relations by automatically refining each initial helical twist (r_y, the sign of theta_y, theta_z) to a compact and non-overlapping fibril assembly.
-### 3. FibrilGen/ MD modeling pipeline
-FibrilGen provides geometrically feasible peptide assemblies with pre-assembled backbone hydrogen bonding and sidechain packing. Whether such an assembly is energetically favorable can be assessed by energy minimization, heating equilibration, and MD simulation. A modelling pipeline combining FibrilGen with MD simulation to accept or reject hypothetical structures can provide a systematic investigation of fibril assembly in various protonation states and solvent conditions.
+## Applications
+### 1. Reconstruction/ generation of hypothetical fibril structures
+FibrilGen can reconstruct an atomic-level model of a given cross-$\beta$ fibril observed experimentally. A combined analysis of 3D cryo-EM electron density and ssNMR data could reveal the basic 2x2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g). 
+FibrilGen can generate a hypothetical fibril structure for a given peptide molecule. The modelling scheme in Figure 1 is the conformational space of FibrilGen, where the choice of peptide alignment (parallel or antiparallel) in the 2 x 2 unit is discrete, the parameter space (**K**, $M$, $\theta_s$) for the stacking on the fibril cross-section is discrete, and the parameter space ($r_y$, $\theta_y$, $\theta_z$) for the helical twist of the fibril is continuous. Notice that the 2 x 2 unit and the stacking parameters (**K**, $M$, $\theta_s$) will determine a combinatorial peptide assembly that constrains the feasible helical twists. In FibrilGen, the initial helical twist ($r_y$, the sign of $\theta_y$, $\theta_z$) will be automatically refined to a compact and non-overlapping fibril structure.
+### 2. Fibril structure and dynamics
+
+![plot](demo/FibrilGen-MD/workflow.png)
+
+Figure 5. FibrilGen/MD workflow for hypothesizing fibril structures (a) Initialize a 2 x 2 unit (b) Assess whether the 2 x 2 unit can be energy minimized without losing backbone hydrogen bonds (c) Assemble an energy minimized 2 x 2 unit into a fibril structure (d) Assess whether the fibril structure can be energy minimized and equilibrated without losing the combined assembly, and then assess whether the overall structure is stable in molecular dynamics simulation.
+
+Pre-assembled backbone hydrogen bonding and a refined sidechain packing are among the important factors that maintain the fibril structure (in the solvent) over a long molecular dynamics simulation. Energy minimization of a given 2 x 2 unit could refine sidechain packing in the cross-$\beta$ unit or reveal potential electrostatic interactions that tend to break backbone hydrogen bonds (Figure 5b). FibrilGen could then explore geometrically feasible fibril assembly for a given 2 x 2 unit (Figure 5c). Whether such a combination of hydrogen bonds and the sidechain packing can stabilize a fibril structure (in the solvent) can be further investigated using molecular dynamics simulation (Figure 5d). Notice that during heating equilibration, it is suggested to apply a constraint potential between central $C_\alpha$ atoms of consecutive $\beta$-strands. A restraint file for the Amber molecular dynamics package, under option nmropt=1, is exemplified in demo/FibrilGen-MD/write_restraint.py
 
 ## License
 The code is free for non-commercial use.
