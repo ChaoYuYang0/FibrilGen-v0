@@ -7,12 +7,12 @@ Figure 1. FibrilGen modeling of cross-beta structures. (a) A 2 x 2 alignment of 
 
 ## Library functions
 FibrilGen has six functions under the class "fibril". Each function takes a set of input parameters described below.
-1. fibril.build_a_flat_sheet ($N$). The function “build_a_flat_sheet” takes only one parameter, $N$, to specify the repeat of the 2x2 unit along the beta-sheet axis.
-2. fibril.build_a_stacked_sheet(**K**, $N$). The function “build_a_stacked_sheet” takes input parameters $N$ and **K** to stack the 2x2 unit along the fibril long axis and on the fibril cross-section, respectively.
-3. fibril.build_a_rod($\theta_z$, $N$, the sign of $\theta_y$). The function “build_a_rod” takes an input parameter $N$ to stack the 2x2 unit along the beta-sheet axis. An initial helical twist is assigned with a tilt angle $\theta_z$ and the direction (assigned to 1 or -1) of the twist angle $\theta_y$.
-4. fibril.build_a_stacked_rod($\theta_z$, **K**, $N$, the sign of $\theta_y$). The function “build_a_stacked_rod” takes input parameters $N$ and **K** for a linear stacking of the 2x2 unit along the fibril long axis and on the fibril cross-section. An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned as 1 or -1) of the twist angle $\theta_y$.
-5. fibril.build_a_ribbon($\theta_z$, $r_y$, $N$, the sign of $\theta_y$). The function “build_a_ribbon” takes an input parameter $N$ to stack the 2x2 unit along the fibril long axis. An initial helical twist is assigned with a tilt angle $\theta_z$, a radius $r_y$, and the direction (assigned as 1 or -1) of the twist angle $\theta_y$.
-6. fibril.build_a_stacked_ribbon($\theta_z$, $r_y$, $\theta_s$, $M$, $N$, the sign of $\theta_y$). The function “build_a_stacked_ribbon” takes input parameter $N$ to stack the 2x2 unit along the fibril long axis. The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for $M$ times is assigned. An initial helical twist is assigned with a tilt angle $\theta_z$, a radius $r_y$, and the direction (assigned as 1 or -1) of the twist angle $\theta_y$. Here tube is a special case that $\theta_s M=360°$.
+1. fibril.build_a_flat_sheet ($N$). The function “build_a_flat_sheet” takes only one parameter, $N$, to specify the repeat of the 2 x 2 unit along the beta-sheet axis.
+2. fibril.build_a_stacked_sheet(**K**, $N$). The function “build_a_stacked_sheet” takes input parameters $N$ and **K** to stack the 2 x 2 unit along the fibril long axis and on the fibril cross-section, respectively.
+3. fibril.build_a_rod($\theta_z$, $N$, the sign of $\theta_y$). The function “build_a_rod” takes an input parameter $N$ to stack the 2 x 2 unit along the beta-sheet axis. An initial helical twist is assigned with a tilt angle $\theta_z$ and the direction (assigned to 1 or -1) of the twist angle $\theta_y$.
+4. fibril.build_a_stacked_rod($\theta_z$, **K**, $N$, the sign of $\theta_y$). The function “build_a_stacked_rod” takes input parameters $N$ and **K** for a linear stacking of the 2 x 2 unit along the fibril long axis and on the fibril cross-section. An initial helical twist is assigned with a tilt angle theta_z and the direction (assigned as 1 or -1) of the twist angle $\theta_y$.
+5. fibril.build_a_ribbon($\theta_z$, $r_y$, $N$, the sign of $\theta_y$). The function “build_a_ribbon” takes an input parameter $N$ to stack the 2 x 2 unit along the fibril long axis. An initial helical twist is assigned with a tilt angle $\theta_z$, a radius $r_y$, and the direction (assigned as 1 or -1) of the twist angle $\theta_y$.
+6. fibril.build_a_stacked_ribbon($\theta_z$, $r_y$, $\theta_s$, $M$, $N$, the sign of $\theta_y$). The function “build_a_stacked_ribbon” takes input parameter $N$ to stack the 2 x 2 unit along the fibril long axis. The rotational stacking on the fibril cross-section with an incremental rotation angle theta_s repeated for $M$ times is assigned. An initial helical twist is assigned with a tilt angle $\theta_z$, a radius $r_y$, and the direction (assigned as 1 or -1) of the twist angle $\theta_y$. Here tube is a special case that $\theta_s M=360°$.
 
 ## Software compatibility
 Users can import FibrilGen library from PyMOL command line and use FibrilGen functions to generate their fibril structures. FibrilGen is compatible with PyMOL versions v2.3.5 (commercial), v1.7.4.5 (educational), and v2.3.0 (open-source). 
@@ -94,7 +94,7 @@ Figure 3. Building a bilayer structure. (a) A linear segment is selected from th
 pymol.cmd.run('builder.py')
 # Load a bilayer structure
 pymol.cmd.load('structures/input/capF8_bilayer.pdb')
-# Select four peptides p1,p2,p3,p4 to construct a 2x2 assembly unit
+# Select four peptides p1,p2,p3,p4 to construct a 2 x 2 assembly unit
 pymol.cmd.select('p1','resi 21-30')
 pymol.cmd.select('p2','resi 31-40')
 pymol.cmd.select('p3','resi 111-120')
@@ -122,7 +122,7 @@ Figure 4. Building a cross-beta structure. (a) A 2 x 2 unit selected from the bi
 
 ## Applications
 ### 1. Reconstruction/ generation of hypothetical fibril structures
-FibrilGen can reconstruct an atomic-level model of a given cross-beta fibril observed experimentally. A combined analysis of 3D cryo-EM electron density and ssNMR data could reveal the basic 2x2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g). 
+FibrilGen can reconstruct an atomic-level model of a given cross-beta fibril observed experimentally. A combined analysis of 3D cryo-EM electron density and ssNMR data could reveal the basic 2 x 2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g). 
 FibrilGen can generate a hypothetical fibril structure for a given peptide molecule. The modelling scheme in Figure 1 is the conformational space of FibrilGen, where the choice of peptide alignment (parallel or antiparallel) in the 2 x 2 unit is discrete, the parameter space (**K**, $M$, $\theta_s$) for the stacking on the fibril cross-section is discrete, and the parameter space ($r_y$, $\theta_y$, $\theta_z$) for the helical twist of the fibril is continuous. Notice that the 2 x 2 unit and the stacking parameters (**K**, $M$, $\theta_s$) will determine a combinatorial peptide assembly that constrains the feasible helical twists. In FibrilGen, the initial helical twist ($r_y$, the sign of $\theta_y$, $\theta_z$) will be automatically refined to a compact and non-overlapping fibril structure.
 ### 2. Fibril structure and dynamics
 
