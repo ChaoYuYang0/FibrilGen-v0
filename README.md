@@ -125,6 +125,7 @@ Figure 4. Building a cross-beta structure. (a) A 2 x 2 unit selected from the bi
 ## Applications
 ### 1. Reconstruction/ generation of compact fibril structures
 FibrilGen can reconstruct an atomic-level model of a cross-beta fibril observed experimentally, given a combined analysis of 3D cryo-EM electron density and ssNMR data revealing the basic 2 x 2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g).
+
 FibrilGen can generate a hypothetical fibril structure for a given peptide molecule, based on the modelling scheme presented in Figure 1. In the conformational space of FibrilGen, the choice of peptide alignment (parallel or antiparallel) in the 2 x 2 unit is discrete, the parameter space (**K**, $M$, $\theta_s$) for the stacking on the fibril cross-section is discrete, and the parameter space ($r_y$, $\theta_y$, $\theta_z$) for the helical twist of the fibril is continuous. The 2 x 2 unit and the stacking parameters (**K**, $M$, $\theta_s$) determine a combinatorial peptide assembly that constrains the feasible helical twists for a compact assembly. Given an initial helical twist ($r_y$, the sign of $\theta_y$, $\theta_z$) assigned by users, FibrilGen will automatically refine it to a compact and non-overlapping fibril structure.
 ### 2. Assessment of hypothetical fibril structures
 
