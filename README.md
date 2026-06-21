@@ -1,5 +1,7 @@
 # FibrilGen
-FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR data) or they could be purely hypothetical. A FibrilGen/MD workflow has been established for screening geometrically feasible and energetically favorable cross-beta structures (details in the published [paper](https://doi.org/10.1021/acs.jcim.5c02108)). Systematic exploration of various peptide assembly, protonation states, and solvent conditions can aid the design of peptide-based nanomaterials.
+Engineering cross-beta nanofibrils morphologies and physicochemical properties is attractive for many biomedical applications, such as cell culture and controlled drug release. However, rational design of cross-beta structure is often challenging, given the variations in peptide assembly and limited crystalized conditions for obtaining high-resolution cryogenic electron microscopy (cryo-EM) and solid-state nuclear magnetic resonance data. We could ask whether it is possible to construct a modelling pipeline to systematically explore the structural basis and conformational landscape of cross-beta nanofibrils. 
+
+FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR) or purely hypothetical. A FibrilGen/MD workflow can be established for screening geometrically feasible and energetically favourable cross-beta structures (details in the published [paper](https://doi.org/10.1021/acs.jcim.5c02108)).
 
 ![plot](demo/demo-fig1.png)
 
@@ -121,10 +123,10 @@ run scripts/fibril_init.py
 Figure 4. Building a cross-beta structure. (a) A 2 x 2 unit selected from the bilayer structure (b) $C_\alpha$ atoms from the bilayer to construct a reference coordinate (c) A ribbon model of stacking and twisting the 2 x 2 unit. The input bilayer, 2 x 2 unit, reference coordinate system, fibril model, and the value of geometrical parameters can be changed. 
 
 ## Applications
-### 1. Reconstruction/ generation of hypothetical fibril structures
-FibrilGen can reconstruct an atomic-level model of a given cross-beta fibril observed experimentally. A combined analysis of 3D cryo-EM electron density and ssNMR data could reveal the basic 2 x 2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g). 
-FibrilGen can generate a hypothetical fibril structure for a given peptide molecule. The modelling scheme in Figure 1 is the conformational space of FibrilGen, where the choice of peptide alignment (parallel or antiparallel) in the 2 x 2 unit is discrete, the parameter space (**K**, $M$, $\theta_s$) for the stacking on the fibril cross-section is discrete, and the parameter space ($r_y$, $\theta_y$, $\theta_z$) for the helical twist of the fibril is continuous. Notice that the 2 x 2 unit and the stacking parameters (**K**, $M$, $\theta_s$) will determine a combinatorial peptide assembly that constrains the feasible helical twists. In FibrilGen, the initial helical twist ($r_y$, the sign of $\theta_y$, $\theta_z$) will be automatically refined to a compact and non-overlapping fibril structure.
-### 2. Fibril structure and dynamics
+### 1. Reconstruction/ generation of compact fibril structures
+FibrilGen can reconstruct an atomic-level model of a cross-beta fibril observed experimentally, given a combined analysis of 3D cryo-EM electron density and ssNMR data revealing the basic 2 x 2 alignment (Figure 1a), the stacking pattern on the fibril cross-section (Figure 1d or 1f), and the fibril helical twist (Figure 1e or 1g).
+FibrilGen can generate a hypothetical fibril structure for a given peptide molecule, based on the modelling scheme presented in Figure 1. In the conformational space of FibrilGen, the choice of peptide alignment (parallel or antiparallel) in the 2 x 2 unit is discrete, the parameter space (**K**, $M$, $\theta_s$) for the stacking on the fibril cross-section is discrete, and the parameter space ($r_y$, $\theta_y$, $\theta_z$) for the helical twist of the fibril is continuous. The 2 x 2 unit and the stacking parameters (**K**, $M$, $\theta_s$) determine a combinatorial peptide assembly that constrains the feasible helical twists for a compact assembly. Given an initial helical twist ($r_y$, the sign of $\theta_y$, $\theta_z$) assigned by users, FibrilGen will automatically refine it to a compact and non-overlapping fibril structure.
+### 2. Assessment of structual stability
 
 ![plot](demo/FibrilGen-MD/workflow.png)
 
@@ -136,7 +138,7 @@ Pre-assembled backbone hydrogen bonding and a refined sidechain packing are amon
 The code is free for non-commercial use.
 
 ## Contact information
-Please email Chao-Yu Yang at chao-yu.yang@postgrad.manchester.ac.uk or cherryyang0215@gmail.com.
+Any feedback, comments, and suggestions are welcome. Please use GitHub issues or email Chao-Yu Yang at cherryyang0215@gmail.com.
 
 ## Citation
 Chao-Yu Yang, Aline F. Miller, Alberto Saiani, Richard A. Bryce. FibrilGen: a Python package for atomistic modelling of peptide b-sheet nanostructures, JCIM, (2025). DOI:[10.1021/acs.jcim.5c02108](https://doi.org/10.1021/acs.jcim.5c02108)
