@@ -1,7 +1,11 @@
 # FibrilGen
-Engineering cross-beta nanofibrils morphologies and physicochemical properties is attractive for many biomedical applications, such as cell culture and controlled drug release. However, rational design of cross-beta structure is often challenging, given the variations in peptide assembly and limited crystalized conditions for obtaining high-resolution cryogenic electron microscopy (cryo-EM) and solid-state nuclear magnetic resonance data. We could ask whether it is possible to construct a modelling pipeline to systematically explore the structural basis and conformational landscape of cross-beta nanofibrils. 
+## Updates
+FibrilGen is a Python package for building cross-beta nanostructures. Versions are developed for different purposes:
+1. [FibrilGen-v0](https://github.com/ChaoYuYang0/FibrilGen-v0) is the repository for our [paper](https://doi.org/10.1021/acs.jcim.5c02108).
+2. [FibrilGen-v1](https://github.com/ChaoYuYang0/FibrilGen-v1) focuses on constructing fibril modelling pipelines and demonstrations.
 
-FibrilGen, a PyMOL plugin, enables the construction of various cross-beta structures with a set of controllable parameters. Such cross-beta structures could be modelled based on experimental data (e.g., cryo-EM or ssNMR) or purely hypothetical. A FibrilGen/MD workflow can be established for screening geometrically feasible and energetically favourable cross-beta structures (details in the published [paper](https://doi.org/10.1021/acs.jcim.5c02108)).
+## Introduction
+Engineering cross-beta nanofibrils morphologies and physicochemical properties is attractive for many biomedical applications, such as cell culture and controlled drug release. However, rational design of cross-beta structure is often challenging, given the variations in peptide assembly and limited crystalized conditions for obtaining high-resolution cryogenic electron microscopy (cryo-EM) and solid-state nuclear magnetic resonance data. We could ask whether it is possible to construct a modelling pipeline to systematically explore the structural basis and conformational landscape of cross-beta nanofibrils. 
 
 ![plot](demo/demo-fig1.png)
 
